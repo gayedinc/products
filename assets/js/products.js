@@ -531,22 +531,45 @@ function getProductTagsHtml(tags) {
   return tagsHtml;
 }
 
+//tagleri filtrelemek için
+function hasTagsFilteredText(tags) {
+  for (const tag of tags) {
+    if (tag.includes(filteredText)) {
+      return true;
+    }
+  }
+  return false; //eğer bulamazsa false dön
+}
+
 // ürünleri ekrana basmak için kullandığım fonksiyon
+//render kelimesi ekrana bir şey çıkarmak anlamına gelir
 function render() {
-  productList.innerHTML = '';
+  productList.innerHTML = ''; // temizlik yapmazsak üst üste yazar
   for (const product of products) {
     // title, category ve tag için arama
-    const isMatch =
-      product.title.toLocaleLowerCase('en').includes(filteredText) ||
-      product.category.toLocaleLowerCase('en').includes(filteredText) ||
-      product.tags.find(tag => tag.toLocaleLowerCase('en').includes(filteredText));
+    if (
+      product.title.toLocaleLowerCase('en').includes(filteredText)
+      ||
+      product.category.toLocaleLowerCase('en').includes(filteredText)
+      ||
+      hasTagsFilteredText(product.tags)
+    )
 
-    // yanlışı kontrol etmek doğruları kontrol etmekten daha kolaydır
-    if (!isMatch) {
-      continue; // Eğer eşleşme yoksa bir sonraki ürüne geçer
-    }
+      // Başka bir yöntem ise;
+      //   const isMatch =
+      //     product.title.toLocaleLowerCase('en').includes(filteredText) ||
+      //     product.category.toLocaleLowerCase('en').includes(filteredText) ||
+      //     product.tags.find(tag => tag.toLocaleLowerCase('en').includes(filteredText));
 
-    productList.innerHTML += `<li class="product-card">
+      // // önce toLocaleLowerCase kullanılır çünkü bir string ifade döner daha sonra includes kullanılır bu da boolen döner
+      // // tam tersi kullanılamaz çünkü boolen ifadenin üzerinde büyük küçük harf kontrolü yapılamaz
+
+      // // yanlışı kontrol etmek doğruları kontrol etmekten daha kolaydır
+      // if (!isMatch) { // !isMatch => !==true (daha kısa ve pratik yazım halidir)
+      //   continue; // Eğer eşleşme yoksa bir sonraki ürüne geçer
+      // }
+
+      productList.innerHTML += `<li class="product-card">
       <figure>
         <img src="${product.thumbnail}">
       </figure>
