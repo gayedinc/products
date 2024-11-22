@@ -510,13 +510,13 @@ products = [
 const productList = document.querySelector('.productsList');
 const filterForm = document.getElementById('filterForm');
 
-//formun name değeri - global filtrelenen kelime değişkeni
+//global filtrelenen kelime değişkeni
 let filteredText = '';
 
 // inputa giriş yapıldığında veya değişiklik olduğunda filtreleme yapar ve sonucu günceller
 function handleSubmit(e) {
   e.preventDefault(); // formun varsayılan sayfa yenileme davranışını durdurmak için
-  filteredText = filterForm.filteredText.value.toLocaleLowerCase('en');
+  filteredText = filterForm.filteredText.value.toLocaleLowerCase('en'); //formun name değeri filteredText
   render(); // güncellenen filteredText'e göre ürün listesini yeniden oluşturur
 }
 
