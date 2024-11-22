@@ -77,6 +77,7 @@ a {
   font-size: 32px;
   font-weight: 700;
   line-height: 39.01px;
+  margin-bottom: 20px;
 }
 
 .productsList {
@@ -92,17 +93,17 @@ form{
   justify-content: center;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .searchInput {
+  background-color: rgb(250, 236, 238);
   border-style: none;
   border-radius: 10px;
   padding: 10px;
   font-size: 16px;
-  width: 300px;
+  width: 327px;
   margin-bottom: 20px;
-  border: 2px solid #ddd;
+  border: 1px solid #C80036;
   border-radius: 5px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s ease;
@@ -113,9 +114,11 @@ form{
   outline: none;
 }
 
-.list-item {
+.product-card {
   display: flex;
   flex-direction: column;
+  align-items: start;
+  gap: 10px;
   list-style: none;
   border-radius: 30px;
   padding: 20px;
@@ -124,24 +127,29 @@ form{
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.list-item:hover {
+.product-card img {
+  width: 100%;
+  display: block;
+  border-radius: 30px;
+  background-color: rgb(252, 208, 214);
+}
+
+.product-card:hover {
   transform: scale(1.03);
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
 }
 
-.list-item h2 {
-  color: #C80036;
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 28px;
-  margin-bottom: 8px;
-}
-
-.list-item p {
+.product-card p {
   color: #0C1844;
   font-size: 15px;
   font-weight: 700;
   line-height: 28px;
+}
+
+.product-card h4 {
+  background-color: lightsalmon;
+  padding: 7px 10px;
+  border-radius: 8px;
 }
 
 .flashing-title {
@@ -149,6 +157,19 @@ form{
   text-align: center;
   color: #C80036;
   animation: flash 1.5s infinite;
+}
+
+.product-tags {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.product-tags li {
+  background-color: lightsalmon;
+  padding: 5px;
+  border-radius: 8px;
 }
 
 @keyframes flash {
@@ -175,6 +196,10 @@ form{
     grid-template-columns: 1fr 1fr;
     gap: 30px;
   }
+
+  .searchInput {
+    width: 689px;
+  }
 }
 
 @media (width >= 1280px) {
@@ -185,5 +210,9 @@ form{
 
   .productsList {
     grid-template-columns: repeat(auto-fill, 250px);
+  }
+
+  .searchInput {
+    width: 736px;
   }
 }

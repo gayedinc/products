@@ -507,33 +507,59 @@ products = [
   }
 ]
 
-
-
 const productList = document.querySelector('.productsList');
-const searchInput = document.querySelector('.searchInput');
+const filterForm = document.getElementById('filterForm');
 
-searchInput.addEventListener('input', function () {
-  const searchValue = searchInput.value.toLowerCase().trim();
-  const filtrelenenUrunler = products.filter(product => {
-    return product.title.toLowerCase().includes(searchValue)
-  })
-  showProducts(filtrelenenUrunler);
-});
+//formun name değeri - global filtrelenen kelime değişkeni
+let filteredText = '';
 
-function showProducts(filtrelenenUrunler) {
+// inputa giriş yapıldığında veya değişiklik olduğunda filtreleme yapar ve sonucu günceller
+function handleSubmit(e) {
+  e.preventDefault(); // formun varsayılan sayfa yenileme davranışını durdurmak için
+  filteredText = filterForm.filteredText.value.toLocaleLowerCase('en');
+  render(); // güncellenen filteredText'e göre ürün listesini yeniden oluşturur
+}
+
+filterForm.addEventListener('input', handleSubmit);
+
+// etiketleri bastırmak için kullandığım fonksiyon
+function getProductTagsHtml(tags) {
+  let tagsHtml = '';
+  for (const tag of tags) {
+    tagsHtml += `<li>${tag}</li>`;
+  }
+  return tagsHtml;
+}
+
+// ürünleri ekrana basmak için kullandığım fonksiyon
+function render() {
   productList.innerHTML = '';
-  for (const product of filtrelenenUrunler) {
-    productList.innerHTML += `<li class="list-item">
-    <h2>Product Image: </h2><img src="${product.thumbnail}" alt="Product Image">
-    <h2>Product Title: </h2><p>${product.title}</p>
-    <h2>Product Brand: </h2><p>${product.brand}</p>
-    <h2>Product Category: </h2><p>${product.category}</p>
-    <h2>Product Description: </h2><p>${product.description}</p>
-    <h2>Product Price: </h2><p>${product.price}</p>
-    <h2>Product Stock: </h2> <p>${product.stock}</p>
-    <h2>Product Tags: </h2><p>${product.tags}</p>
+  for (const product of products) {
+    // title, category ve tag için arama
+    const isMatch =
+      product.title.toLocaleLowerCase('en').includes(filteredText) ||
+      product.category.toLocaleLowerCase('en').includes(filteredText) ||
+      product.tags.find(tag => tag.toLocaleLowerCase('en').includes(filteredText));
+
+    // yanlışı kontrol etmek doğruları kontrol etmekten daha kolaydır
+    if (!isMatch) {
+      continue; // Eğer eşleşme yoksa bir sonraki ürüne geçer
+    }
+
+    productList.innerHTML += `<li class="product-card">
+      <figure>
+        <img src="${product.thumbnail}">
+      </figure>
+      <h4>${product.category}</h4>
+      <h3>${product.title}</h3>
+      <p>${product.description}</p>
+      <div class="product-footer">
+        <strong>${product.price}</strong> | <strong>stok: ${product.stock}</strong>
+      </div>
+      <ul class="product-tags">${getProductTagsHtml(product.tags)}</ul>
     </li>`;
   }
 }
 
-showProducts(products);
+// sayfa ilk yüklendiğinde çalışması için
+render();
