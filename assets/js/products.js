@@ -534,9 +534,9 @@ function getProductTagsHtml(tags) {
 //tagleri filtrelemek için
 function hasTagsFilteredText(tags) {
   for (const tag of tags) {
-    if (tag.includes(filteredText)) {
-      return true;
-    }
+    if (tag.includes(filteredText)) { // bu etikette benim filtrelediğim metin var mı?
+      return true; // bulduktan sonra true dön ve return ile bitir
+    } // burada else kullanmıyoruz çünkü 3 tane bulduğunu varsayarsak else kullandığımızda ilkini bulur ve else geçer ama biz her etikete bakmak istiyoruz
   }
   return false; //eğer bulamazsa false dön
 }
